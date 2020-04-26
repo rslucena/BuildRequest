@@ -4,18 +4,20 @@ namespace Build\Component;
 
 class request extends response {
 
+    private $Request;
 
-    public function handle($input, $output = null){
+    /**
+     * Request constructor.
+     * @param $input
+     */
+    public function handle($input = null){
+
+        $this->Request = $input;
 
     }
 
-    public function call($command, array $parameters = [], $outputBuffer = null){
+    public function call( $command, array $parameters = array() ){
 
-    }
-
-
-
-    public function output(){
 
     }
 

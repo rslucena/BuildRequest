@@ -7,14 +7,6 @@ class head
     private $response_code;
 
     /**
-     * Head constructor.
-     */
-    public function __construct()
-    {
-        $this->response_code = 200;
-    }
-
-    /**
      * Define a state to the header
      * @param $status_code
      */

@@ -74,9 +74,13 @@ class response extends head
 
         $this->response['args'] = $this->afterResponse($args);
 
+        $this->output();
+
     }
 
+    public function output(){
 
 
+    }
 
 }

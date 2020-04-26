@@ -2,11 +2,17 @@
 
 namespace Build\Application;
 
+use Build\Controller\routes;
+
 class kernel
 {
+    //ACTIONS
+    protected $Routes;
+    protected $Request;
 
-    protected $spaces;
-    protected $basedir;
+    //KERNEL
+    private $spaces;
+    private $basedir;
 
     /**
      * Record application startup
@@ -21,22 +27,35 @@ class kernel
         // Defines which components are to be loaded
         $this->spaces = array(
             'component' => array('head', 'response', 'request'),
-            'converter' => array('json')
+            'converter' => array('json'),
+            'routes'    => array('routes')
         );
 
-        // Init
+        // Create core
         $this->builderKernel();
+
     }
 
     /**
      * Record automatic component loading
      */
-    public function builderKernel()
+    private function builderKernel()
     {
+        // Imports all necessary files for the application engine
         foreach ($this->spaces as $key => $space)
             foreach ($space as $file) {
                 require_once(__DIR__ . '/' . $key . '/' . $file . '.php');
             }
+
+    }
+
+    /**
+     * Redirects the request by analyzing
+     * its controllers and routes
+     */
+    public function Routes(){
+
+        $this->Routes = new routes();
 
     }
 
