@@ -28,7 +28,8 @@ class kernel
         $this->spaces = array(
             'component' => array('head', 'response', 'request'),
             'converter' => array('json'),
-            'routes'    => array('routes')
+            'routes'    => array('routes'),
+            'database'  => array('authentication'),
         );
 
         // Create core
