@@ -12,7 +12,7 @@ trait authentication
     private $username = "root";
     private $servername = "127.0.0.1";
     private $password = "";
-    private $nameDb = 'psico';
+    private $nameDb = '';
 
     //on
     private function connect( $debug ) {
