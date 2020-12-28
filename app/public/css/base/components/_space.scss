@@ -1,0 +1,74 @@
+.p-all {
+  padding: $padding;
+}
+.p-all-upper {
+  padding: $padding * 2;
+}
+
+.p-t {
+  padding-top: $padding;
+}
+.p-b {
+  padding-bottom: $padding;
+}
+.p-l {
+  padding-left: $padding;
+}
+.p-r {
+  padding-right: $padding;
+}
+
+.p-all-low{
+  padding: $padding - 10;
+}
+.p-t-low {
+  padding-top: $padding - 10;
+}
+.p-b-low {
+  padding-bottom: $padding - 10;
+}
+.p-l-low {
+  padding-left: $padding - 10;
+}
+.p-r-low {
+  padding-right: $padding - 10;
+}
+
+.m-auto {
+  margin: auto;
+}
+.m-all {
+  margin: $margin;
+}
+.m-all-low{
+  margin: $padding - 10;
+}
+.m-all-upper {
+  margin: $padding * 2;
+}
+
+.m-t {
+  margin-top: $margin;
+}
+.m-b {
+  margin-bottom: $margin;
+}
+.m-l {
+  margin-left: $margin;
+}
+.m-r {
+  margin-right: $margin;
+}
+
+.m-t-low {
+  margin-top: $margin - 10;
+}
+.m-b-low {
+  margin-bottom: $margin - 10;
+}
+.m-l-low {
+  margin-left: $margin - 10;
+}
+.m-r-low {
+  margin-right: $margin - 10;
+}

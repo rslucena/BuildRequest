@@ -1,0 +1,107 @@
+//GRID
+%grade {
+  z-index: 1;
+  width: 100%;
+  display: block;
+  @extend .m-auto;
+  max-width: $maxwidth;
+}
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: space-between;
+}
+
+.clear {
+  clear: both;
+  content: "";
+  display: table;
+  table-layout: fixed;
+}
+
+.block {
+  display: block;
+}
+.inline {
+  display: inline;
+}
+.initial{
+  display: initial;
+}
+.db-inline {
+  vertical-align: top;
+  display: inline-block;
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.overflow {
+  overflow: hidden;
+}
+
+.hidden {
+  visibility: hidden;
+  display: none;
+}
+
+.container, .content {
+  z-index: 1;
+  @extend %grade;
+  @extend .relative;
+}
+
+.container-full {
+  @extend %grade;
+  max-width: 100%;
+  @extend .relative;
+}
+
+.table {
+  z-index: 10;
+  display: table;
+  position: relative;
+  height: min-content;
+  table-layout: fixed;
+}
+
+.cell-table {
+  height: min-content;
+  text-align: center;
+  display: table-cell;
+  @extend .vertical;
+}
+
+.content-left{
+  align-items: start;
+  justify-content: left;
+}
+
+.vertical {
+  align-items: center;
+  vertical-align: middle
+}
+
+.lr-auto {
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+
+.hv {
+  height: 100vh;
+}
+
+.wv {
+  width: 100vw;
+}

@@ -1,0 +1,33 @@
+@import "../base/variables";
+
+.flex {
+
+  .card {
+
+    &:nth-child( 2n + 2 ) {
+
+      > .block {
+        margin-left: $padding;
+        margin-right: 0;
+      }
+
+    }
+
+  }
+
+}
+
+.no-content{
+
+  width: 100%;
+
+  img, p:last-child{
+    display: none;
+  }
+
+  p{
+    margin-top: 0;
+    text-align: left;
+  }
+
+}

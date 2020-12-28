@@ -1,0 +1,73 @@
+::-webkit-input-placeholder {
+  opacity: 1;
+}
+
+:-moz-placeholder {
+  opacity: 1;
+}
+
+::-moz-placeholder {
+  opacity: 1;
+}
+
+:-ms-input-placeholder {
+  opacity: 1;
+}
+
+.form-group {
+  @extend .relative;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  label {
+    @extend .l-0;
+    @extend .t-6;
+    @extend .absolute;
+    color: currentColor;
+    transform: translateY(-50%);
+
+    margin: 0 0.5rem;
+    padding: 0 0.3rem;
+
+    pointer-events: none;
+    transition: .1s ease-out;
+    transform-origin: left top;
+  }
+
+  input {
+
+    @extend .w-12;
+    outline: none;
+    color: currentColor;
+    @extend .borderRadius;
+
+    padding: 1rem 0.7rem;
+    border: 1px solid currentColor;
+    transition: 0.1s ease-out;
+
+    &:focus-within {
+      border-color: currentColor;
+
+      + label {
+        padding: 5px;
+        @extend .t-0;
+        @extend .borderRadius;
+        background-color: $white;
+        transform: translateY(-49.9%) scale(.9);
+      }
+
+    }
+
+    &:not(:placeholder-shown) + label {
+      padding: 5px;
+      @extend .t-0;
+      @extend .borderRadius;
+      background-color: $white;
+      transform: translateY(-49.9%) scale(.9);
+    }
+
+  }
+
+}

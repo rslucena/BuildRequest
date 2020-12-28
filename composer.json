@@ -1,0 +1,31 @@
+{
+  "name": "BuildRequest",
+  "description": "BuildRequest is a web application framework with simple syntax. In development, open and available for contribution. MVC-based framework"
+  "authors": [
+    {
+      "name": "Rodrigo Lucena",
+      "email": "rodrigo@rslucena.com.br",
+      "homepage": "https://github.com/rslucena"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=7.3.0",
+    "ext-pdo": "*",
+    "ext-json": "*",
+    "ext-curl": "*",
+    "ext-dom": "*",
+    "ext-mbstring": "*"
+  },
+  "config": {
+    "vendor-dir": "vendor"
+  },
+  "autoload": {
+    "classmap": [
+      "app"
+    ],
+    "psr-4": {
+      "app\\": "app/"
+    }
+  }
+}

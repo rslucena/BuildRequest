@@ -1,0 +1,18 @@
+@import "../base/variables";
+
+nav {
+  background-color: $primary;
+
+  .brand {
+    filter: brightness(0) invert(1);
+  }
+
+
+  .avatar {
+    width: 45px;
+    height: 45px;
+    @extend .borderRadius;
+  }
+
+}
+

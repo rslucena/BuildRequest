@@ -1,0 +1,74 @@
+
+//LARGURA
+@function maxpercentage ($col) {
+  @return (percentage($col/$column) - 0.001%);
+}
+
+@function maxpx ($col) {
+  @return ($col/$column) * 100;
+}
+
+@for $i from 1 through $column {
+  .w-#{$i} {
+    width: maxpercentage($i)
+  }
+;
+}
+
+@for $i from 1 through $column {
+  .h-#{$i} {
+    height: maxpx($i) + 0.1px
+  }
+;
+}
+
+@for $i from 1 through $column {
+  .z-#{$i} {
+    z-index: maxpx($i) + 0.1px
+  }
+;
+}
+
+.t-0 {
+  top: 0;
+}
+
+@for $i from 1 through $column {
+  .t-#{$i} {
+    top: maxpercentage($i)
+  }
+;
+}
+
+.l-0 {
+  left: 0;
+}
+
+@for $i from 1 through $column {
+  .l-#{$i} {
+    left: maxpercentage($i)
+  }
+;
+}
+
+.r-0 {
+  right: 0;
+}
+
+@for $i from 1 through $column {
+  .r-#{$i} {
+    right: maxpercentage($i)
+  }
+;
+}
+
+.b-0 {
+  bottom: 0;
+}
+
+@for $i from 1 through $column {
+  .b-#{$i} {
+    bottom: maxpercentage($i)
+  }
+;
+}

@@ -1,0 +1,28 @@
+@media only screen and (min-width: 800px) {
+
+}
+
+@media (max-width: 800px) {
+
+  body {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  @for $i from 1 through $column {
+    .w-#{$i} {
+      width: 100%
+    }
+  ;
+  }
+
+  .wv {
+    width: 100%;
+  }
+
+
+}
+
+@media (max-width: 400px) {
+
+}

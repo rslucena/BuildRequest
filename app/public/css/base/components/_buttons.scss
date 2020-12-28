@@ -1,0 +1,29 @@
+.btn {
+  border: 0;
+  @extend .bold;
+  cursor: pointer;
+  letter-spacing: 1px;
+  font-family: $f-titles;
+}
+
+.btn-transparent{
+  background-color: transparent;
+}
+
+.btn-circle {
+  padding: 5px 15px;
+  border-radius: 35px;
+}
+
+.btn-padding{
+  padding: 10px 30px;
+}
+
+.btn-linear {
+  @extend .linear;
+  @extend .btn-padding;
+}
+
+.bt-border {
+  border: 1px solid currentColor;
+}

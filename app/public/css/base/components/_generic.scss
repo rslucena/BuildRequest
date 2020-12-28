@@ -1,0 +1,28 @@
+.after:after,
+.before:before{
+  content: '';
+  @extend .block;
+}
+
+.background {
+  background-size: cover;
+  background-position: center;
+}
+
+.borderRadius {
+  border-radius: 5px
+}
+
+.border{
+  border: 1px solid currentColor;
+}
+
+.shadow{
+  box-shadow: -5px 5px 8px 0 #1d53700d;
+}
+
+.linear {
+  opacity: 0.7;
+  background: $primary;
+  background: linear-gradient(90deg, $linear0 0%, $linear1 100%);
+}

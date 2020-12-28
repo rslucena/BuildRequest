@@ -1,0 +1,80 @@
+body,
+p,
+a,
+input,
+label {
+  font-size: $h5;
+  color: $linear1;
+  font-family: $f-texts;
+}
+
+hr {
+  @extend .m-auto;
+  border: 0 transparent;
+  border-top: 1px solid currentColor;
+}
+
+
+a {
+  color: $dark;
+  text-decoration: none;
+}
+
+p {
+  font-size: $h5;
+  letter-spacing: 1px;
+  line-height: $line;
+}
+
+strong, b {
+  font-weight: bold !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $f-titles;
+}
+
+h1 {
+  font-size: $h1;
+}
+
+h2 {
+  font-size: $h2;
+}
+
+h3 {
+  font-size: $h3;
+}
+
+h4, h5, h6 {
+  font-size: $h4;
+}
+
+.mini-size {
+  font-size: $h5 - 4px;
+}
+
+.normal{
+  font-weight: normal !important;
+}
+
+.bold{
+  font-weight: 600;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.center {
+  @extend .m-auto;
+  text-align: center;
+}
