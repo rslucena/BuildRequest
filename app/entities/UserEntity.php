@@ -5,9 +5,9 @@
     namespace app\entities;
 
     use app\Bootstrap\Builder;
-    use app\interfaces\authInterface;
+    use app\interfaces\AuthInterface;
 
-    class userEntity extends Builder
+    class UserEntity extends Builder
     {
 
         public $props = array();
@@ -42,13 +42,13 @@
         private function has_access(): void
         {
 
-            if (empty($this->props['assinatura'])) {
+            if (empty($this->props['signature'])) {
 
-                authInterface::updateSession('assinatura', 0);
+                authInterface::updateSession('signature', 0);
 
             } else {
 
-                authInterface::updateSession('assinatura', $this->props['assinatura']);
+                authInterface::updateSession('signature', $this->props['signature']);
 
             }
 
@@ -69,18 +69,17 @@
 
             if (empty($this->props['avatar'])) {
                 $this->props['avatar'] = $url.$size;
-            }
-            else{
+            } else {
 
-                $ch = curl_init(APP_API . $this->props['avatar']);
+                $ch = curl_init(APP_API.$this->props['avatar']);
                 curl_setopt($ch, CURLOPT_NOBODY, true);
                 curl_exec($ch);
                 $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
                 curl_close($ch);
             }
 
-            if( $code == 200 ){
-                $this->props['avatar'] = APP_API . $this->props['avatar'];
+            if ($code === 200) {
+                $this->props['avatar'] = APP_API.$this->props['avatar'];
             }
 
             return $this->props['avatar'];
@@ -92,12 +91,13 @@
          *
          * @return string
          */
-        private function has_reference() : string {
+        private function has_reference(): string
+        {
 
-            $name = $this->props['nome'];
+            $name = $this->props['name'];
 
-            if( empty( $this->props['nome'] )){
-                $name = explode("@" , $this->props['email'] );
+            if (empty($this->props['name'])) {
+                $name = explode("@", $this->props['email']);
                 $name = $name[0];
             }
 
@@ -110,7 +110,7 @@
          *
          * @return array
          */
-        public function build()
+        public function build(): array
         {
             return $this->props;
         }

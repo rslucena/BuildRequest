@@ -43,7 +43,7 @@
                 unset($props['status']);
             }
 
-            $return += $props;
+            $return = array_merge($return, $props);
 
             $return = self::buildJson($return);
 
@@ -71,7 +71,7 @@
         private static function buildJson($resp): string
         {
 
-            return json_encode($resp);
+            return json_encode($resp, JSON_THROW_ON_ERROR);
 
         }
 

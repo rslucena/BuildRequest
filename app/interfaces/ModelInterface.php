@@ -7,7 +7,7 @@
     use PDO;
     use PDOException;
 
-    class modelInterface
+    class ModelInterface
     {
 
         private $connection;
@@ -26,7 +26,7 @@
          * Disable debug mode to
          * debug model actions
          */
-        public function disableDebug()
+        public function disableDebug(): void
         {
             $this->debug = false;
         }
@@ -101,7 +101,7 @@
 
             $sql .= ";";
 
-            if ($this->debug == true) {
+            if ($this->debug === true) {
                 echo "\n $sql \n\n";
             }
 
@@ -130,7 +130,7 @@
         /**
          * Create database connection
          */
-        public function connect()
+        public function connect(): void
         {
 
             $server = DB_SERVE;
@@ -280,7 +280,7 @@
         /**
          * Disconect database connection
          */
-        public function disconnect()
+        public function disconnect(): void
         {
             $this->connection = null;
 

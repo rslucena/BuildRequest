@@ -5,12 +5,12 @@
     namespace app\controllers;
 
     use app\Bootstrap\Builder;
-    use app\interfaces\authInterface;
-    use app\providers\fileProvider;
+    use app\interfaces\AuthInterface;
+    use app\providers\FileProvider;
     use app\providers\RequestProvider;
     use app\providers\ResultProvider;
 
-    class loginController extends Builder
+    class LoginController extends Builder
     {
 
         public function __construct()
@@ -68,7 +68,7 @@
             $valid[] = RequestProvider::validate($params['current-email'], "required|email");
             $valid[] = RequestProvider::validate($params['current-password'], "required|min:7");
 
-            if (in_array(false, $valid)) {
+            if (in_array(false, $valid, true)) {
                 ResultProvider::result(0);
             }
 
@@ -80,7 +80,7 @@
 
             $result = RequestProvider::request(
                     'POST',
-                    '/clientes/createtokenaccess',
+                    '/client/token',
                     $props
             )['origin'];
 

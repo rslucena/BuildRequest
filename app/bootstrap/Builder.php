@@ -72,20 +72,19 @@
         /**
          * CREATE ROUTER
          */
-        private function getRouter()
+        private function getRouter(): void
         {
 
             #CONTROLLER
             $url_parameter[1] = str_replace(array('-', "@"), '_', $this->getParameter(1));
             $controller_name = explode('?', $url_parameter[1]);
 
-            self::$controler = ($controller_name[0] == '') ? 'home' : $controller_name[0];
+            self::$controler = ($controller_name[0] === '') ? 'home' : $controller_name[0];
 
             #ACTION
             $url_parameter[2] = str_replace(array('-', "@"), '_', $this->getParameter(2));
-            self::$action = ($url_parameter[2] == '') ? 'index' : $url_parameter[2];
+            self::$action = ($url_parameter[2] === '') ? 'index' : $url_parameter[2];
 
-            //Set Error class
             if( strpos(self::$controler, "error") !== false){
                 self::$controler = 'home';
                 self::$action = 'error404';
@@ -109,7 +108,7 @@
 
             $return = (count($url) > $position) ? $url[$position] : '';
 
-            $return = (@$return[0] == '?') ? '' : $return;
+            $return = (@$return[0] === '?') ? '' : $return;
 
             return $return;
         }
@@ -167,7 +166,7 @@
         {
 
             if (empty($keys)) {
-                return strval($html);
+                return $html;
             }
 
             for ($x = 1; $x < 6; $x++) {

@@ -4,7 +4,7 @@
 
     namespace app\providers;
 
-    class fileProvider
+    class FileProvider
     {
 
         private static $display_version = CONF_DISPLAYVERSION;
@@ -34,17 +34,17 @@
          *
          * @return string
          */
-        static function enqueue($js = array(), $css = array()): string
+        public static function enqueue($js = array(), $css = array()): string
         {
 
             //RETURN
             $out = "";
 
-            if( !empty($css) ){
+            if (!empty($css)) {
                 $out .= self::loop($css, 'css');
             }
 
-            if( !empty($js) ){
+            if (!empty($js)) {
                 $out .= self::loop($js, 'js');
             }
 
@@ -103,15 +103,15 @@
         private static function recoverFileVersion($path): string
         {
 
-            if (file_exists($path) == false) {
-                return strval(0);
+            if (file_exists($path) === false) {
+                return (string)0;
             }
 
             $modifyDate = date("F d Y H:i:s", filemtime($path));
 
             $modifyDate = strtotime($modifyDate);
 
-            return strval($modifyDate);
+            return (string)$modifyDate;
 
         }
 

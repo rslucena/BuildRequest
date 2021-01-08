@@ -4,11 +4,11 @@
 
     namespace app\interfaces;
 
-    class logInterface
+    class LogInterface
     {
 
-        static $error;
-        static $trace = array();
+        protected static $error;
+        protected static $trace = array();
 
         /**
          *
@@ -20,8 +20,9 @@
          * @param array  $params
          * @param bool  $clear
          *
+         * @return void
          */
-        static function save($message, $params = array(), $clear = false): void
+        public static function save($message, $params = array(), $clear = false): void
         {
 
             self::requestTrace();
@@ -32,14 +33,14 @@
                 self::flush();
             }
 
-            $file = fopen(self::$trace['path'], "a+");
+            $file = fopen(self::$trace['path'], 'ab+');
 
             fwrite(
                     $file,
                     @date('d/m/Y h:i:s')." - ".
                     self::$trace['className']."Controller - ".self::$trace['function']."Function \n".
                     'msg:: '.$message."\n".
-                    'params:: '.json_encode($params)."\n\n"
+                    'params:: '.json_encode($params, JSON_THROW_ON_ERROR)."\n\n"
             );
 
             fclose($file);
@@ -49,8 +50,11 @@
         /**
          * Do the necessary tracking
          * to identify which controller and function
+         *
+         * @return void
+         *
          */
-        static function requestTrace()
+        public static function requestTrace(): void
         {
 
             $trace = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -59,7 +63,7 @@
                 $trace = substr($trace, 0, -1);
             }
 
-            if (substr($trace, 0, 1) === '/') {
+            if ($trace[0] === '/') {
                 $trace = substr($trace, 1);
             }
 
@@ -86,17 +90,19 @@
          * any type of Log file
          *
          * @file nameController__nameFunction
+         *
+         * @return void
          */
-        static function create(): void
+        public static function create(): void
         {
 
             $nameFile = self::$trace['className'].'Controller__'.self::$trace['function'].'Function.txt';
 
             $nameFile = ucfirst($nameFile);
 
-            if (file_exists(DIR_LOGS.'\\'.$nameFile) == false) {
+            if (file_exists(DIR_LOGS.'\\'.$nameFile) === false) {
 
-                $file = fopen(DIR_LOGS.'\\'.$nameFile, "w");
+                $file = fopen(DIR_LOGS.'\\'.$nameFile, 'wb');
                 fwrite($file, '');
                 fclose($file);
 
@@ -112,7 +118,7 @@
          *
          * @file nameController__nameFunction
          */
-        static function flush(): void
+        public static function flush(): void
         {
 
             self::requestTrace();
@@ -121,7 +127,7 @@
 
             $nameFile = ucfirst($nameFile);
 
-            $file = fopen(DIR_LOGS.'\\'.$nameFile, "w");
+            $file = fopen(DIR_LOGS.'\\'.$nameFile, 'wb');
             fwrite($file, '');
             fclose($file);
 

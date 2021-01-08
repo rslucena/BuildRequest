@@ -7,7 +7,7 @@
     use DateTime;
     use Exception;
 
-    class htmlProvider
+    class HtmlProvider
     {
 
         /**
@@ -18,7 +18,7 @@
          *
          * @return string
          */
-        public static function css($href, $props = array())
+        public static function css($href, $props = array()): string
         {
             $props['href'] = $href;
             $props['rel'] = 'stylesheet';
@@ -60,7 +60,7 @@
          *
          * @return string
          */
-        public static function js($href, $props = array())
+        public static function js($href, $props = array()): string
         {
             $props['src'] = $href;
             return self::tag('script', " ", $props);
@@ -119,7 +119,7 @@
          *
          * @return string
          */
-        public static function img($src, $props = array())
+        public static function img($src, $props = array()): string
         {
 
             $props['src'] = $src;
@@ -152,7 +152,7 @@
          *
          * @return string
          */
-        public static function p($value, $props = array())
+        public static function p($value, $props = array()): string
         {
             return self::tag('p', $value, $props);
         }
@@ -165,7 +165,7 @@
          *
          * @return string
          */
-        public static function div(string $value, $props = array())
+        public static function div(string $value, $props = array()): string
         {
             return self::tag('div', $value, $props);
         }
@@ -179,7 +179,7 @@
          *
          * @return string
          */
-        public static function ul(string $value, $props = array())
+        public static function ul(string $value, $props = array()): string
         {
             return self::tag('ul', $value, $props);
         }
@@ -194,7 +194,7 @@
          * @return string
          * @throws \Exception
          */
-        public static function time(string $value, string $entry = "Y-m-d H:i:s", string $leave = "d/m/Y - H:i")
+        public static function time(string $value, string $entry = "Y-m-d H:i:s", string $leave = "d/m/Y - H:i"): ?string
         {
 
             try {
@@ -222,7 +222,7 @@
          *
          * @return string
          */
-        public static function li(string $value, $props = array())
+        public static function li(string $value, $props = array()): string
         {
             return self::tag('li', $value, $props);
         }
@@ -235,7 +235,7 @@
          *
          * @return string
          */
-        public static function label(string $value, $props = array())
+        public static function label(string $value, $props = array()): string
         {
             if( empty($props['for'])){
                 $props['for'] = $value;
@@ -251,7 +251,7 @@
          *
          * @return string
          */
-        public static function input(string $value, $props = array())
+        public static function input(string $value, $props = array()): string
         {
             if( empty($props['name'])){
                 $props['name'] = $value;
@@ -264,7 +264,6 @@
             return self::tag('input', null, $props);
         }
 
-
         /**
          * Function to create checkbox input
          *
@@ -273,7 +272,8 @@
          *
          * @return string
          */
-        public static function checkbox(string $name, string $text ){
+        public static function checkbox(string $name, string $text ): string
+        {
 
             $input = '';
 
@@ -294,11 +294,10 @@
          *
          * @param int $step
          * @param string $total
-         * @param int  $active
          *
          * @return string
          */
-        public static function pager(int $step, string $total, int $active = 1): string
+        public static function pager(int $step, string $total): string
         {
 
             if ($total < 0) {
@@ -309,8 +308,8 @@
             $currentPage = strtok($_SERVER['REQUEST_URI'], '?');
 
             //NUMBER OF PAGES
-            $pages = intval($total / $step);
-            $pages = (($pages * $step) == $total) ? $pages : $pages + 1;
+            $pages = (int)($total / $step);
+            $pages = (($pages * $step) === $total) ? $pages : $pages + 1;
 
             if ($pages < 1) {
                 return '';
@@ -318,27 +317,32 @@
 
             #Config
             $return = "";
-            $active = !empty($_GET['p']) ? $_GET['p'] : 1;
+
+            if(!empty($_GET['p'])){
+                $active = (int)$_GET['p'];
+            }else{
+                $active = 1;
+            }
 
             #PREV
 
-            if ($active != 1) {
-                $link = self::a("$currentPage?p=".intval($active - 1), "<", array('class' => "block btn btn-padding bt-border borderRadius c-secondary") );
+            if ($active !== 1) {
+                $link = self::a("$currentPage?p=".($active - 1), "<", array('class' => "block btn btn-padding bt-border borderRadius c-secondary") );
                 $return .= self::li( $link , array('class' => 'm-r'));
             }
 
             #NUMBER
             for ($x = 1; $x <= $pages; $x++) {
-                if (($x >= ($active - 2)) && ($x < ($active + 3) or ($x < 6))) {
-                    $class = ($active == $x) ? 'bg-primary' : '';
+                if (($x >= ($active - 2)) && ($x < ($active + 3) || ($x < 6))) {
+                    $class = ($active === $x) ? 'bg-primary' : '';
                     if (!empty($class)) {
 
-                        $link = self::a("$currentPage?p=$x", "$x", array('class' => "block btn btn-padding borderRadius normal bt-border bg-primary c-white") );
+                        $link = self::a("$currentPage?p=$x", (string)$x, array('class' => "block btn btn-padding borderRadius normal bt-border bg-primary c-white") );
                         $return .= self::li( $link , array('class' => 'm-r'));
 
                     } else {
 
-                        $link = self::a("$currentPage?p=$x", "$x", array('class' => "block btn btn-padding borderRadius bt-border c-secondary") );
+                        $link = self::a("$currentPage?p=$x", (string)$x, array('class' => "block btn btn-padding borderRadius bt-border c-secondary") );
                         $return .= self::li( $link , array('class' => 'm-r'));
 
                     }
@@ -348,7 +352,7 @@
 
             #NEXT
             if (($active + 1) <= $pages) {
-                $link = self::a("$currentPage?p=".intval($active + 1), ">", array('class' => "block btn btn-padding borderRadius bt-border c-secondary") );
+                $link = self::a("$currentPage?p=".($active + 1), ">", array('class' => "block btn btn-padding borderRadius bt-border c-secondary") );
                 $return .= self::li( $link , array('class' => 'm-r'));
             }
 

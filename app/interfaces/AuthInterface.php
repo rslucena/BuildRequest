@@ -4,7 +4,7 @@
 
     namespace app\interfaces;
 
-    class authInterface
+    class AuthInterface
     {
 
         /**
@@ -25,8 +25,8 @@
             }
 
             $user = array();
-            if (!empty(json_decode($invert[1]))) {
-                $user = json_decode($invert[1], true);
+            if (!empty(json_decode($invert[1], true, 512, JSON_THROW_ON_ERROR))) {
+                $user = json_decode($invert[1], true, 512, JSON_THROW_ON_ERROR);
             }
 
             unset($invert);
@@ -62,7 +62,7 @@
             $_SESSION[$key] = $val;
 
             if (!empty($_SESSION[$key])) {
-                return strval($_SESSION[$key]);
+                return (string)$_SESSION[$key];
             }
 
             return null;
@@ -82,6 +82,10 @@
 
             if (!empty($filter) && is_string($filter)) {
 
+                if (empty($_SESSION[$filter])) {
+                    return array();
+                }
+
                 return array($_SESSION[$filter]);
             }
 
@@ -98,18 +102,13 @@
         public static function is_access(): ?bool
         {
 
-
-            if (self::is_login() === false) {
+            if (!self::is_login()) {
                 return false;
             }
 
-            $ass = self::getSession('assinatura');
+            $ass = self::getSession('signature');
 
-            if ($ass[0] === 0) {
-                return false;
-            }
-
-            return true;
+            return $ass[0] !== 0;
 
         }
 
@@ -126,6 +125,10 @@
                 return false;
             }
 
+            if (empty(self::getSession('name'))) {
+                return false;
+            }
+
             return true;
 
         }
@@ -138,7 +141,6 @@
         {
             session_destroy();
             unset($_SESSION);
-            header("location: /");
         }
 
     }

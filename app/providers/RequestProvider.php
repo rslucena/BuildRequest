@@ -31,7 +31,7 @@
             //SHIPPING AND RETURN METHOD
             curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($props));
+            curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($props, JSON_THROW_ON_ERROR));
 
             //HEADER
             curl_setopt($curl, CURLOPT_HTTPHEADER, self::getHeader($token));
@@ -60,16 +60,20 @@
         private static function getHeader($token = false): array
         {
 
-            $head = array(
-                    'Content-Type: application/json'
-            );
+            $authorization = array();
 
-            if (authInterface::is_login()) {
-                $token = authInterface::getSession('token');
+            $head = array('Content-Type: application/json');
+
+            if ($token === false) {
+                return $head;
             }
 
-            if ($token) {
-                $head[] = 'Authorization: Bearer '.$token[0];
+            if (authInterface::is_login()) {
+                $authorization = authInterface::getSession('token');
+            }
+
+            if (!empty($authorization[0])) {
+                $head[] = 'Authorization: Bearer '.$authorization[0];
             }
 
             return $head;
@@ -89,7 +93,7 @@
 
             $response = array();
 
-            $res = json_decode($resp, true);
+            $res = json_decode($resp, true, 512, JSON_THROW_ON_ERROR);
 
             $response['origin'] = array();
             $response['Router'] = array();
@@ -99,8 +103,8 @@
                 $response['Router'] = $request;
             }
 
-            if (!empty($response['origin']['access_token'])) {
-                authInterface::auth($response['origin']['access_token'], false);
+            if (!empty($response['origin']['jwt'])) {
+                authInterface::auth($response['origin']['jwt'], false);
             }
 
             return $response;
@@ -117,9 +121,7 @@
         public static function buildInput(): ?array
         {
 
-            $resp = $_REQUEST;
-
-            return $resp;
+            return $_REQUEST;
 
         }
 
@@ -139,12 +141,12 @@
             $valid = true;
 
             if (strpos($rules, "|") === false) {
-                $rules = $rules."|";
+                $rules .= "|";
             }
 
             $rules = explode('|', $rules);
 
-            $rules = array_filter($rules, function ($value) {
+            $rules = array_filter($rules, static function ($value) {
                 return !empty($value) || $value === 0;
             });
 
