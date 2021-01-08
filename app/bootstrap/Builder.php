@@ -174,7 +174,7 @@
                 foreach ($keys as $key => $value) {
 
                     if (!is_array($value)) {
-                        $html = str_replace('{'.$key.'}', $value, $html);
+                        $html = str_replace('{'.$key.'}', (string)$value, $html);
                     }
 
                     if (is_array($value)) {
@@ -188,12 +188,12 @@
                                     if (is_array($v)) {
 
                                         foreach ($v[0] as $kk => $vv) {
-                                            $html = str_replace('{'.$index.'->'.$kk.'}', $vv, $html);
+                                            $html = str_replace('{'.$index.'->'.$kk.'}', (string)$vv, $html);
                                         }
 
                                     } else {
 
-                                        $html = str_replace('{'.$val.'->'.$key.'->'.$i.'}', $v, $html);
+                                        $html = str_replace('{'.$val.'->'.$key.'->'.$i.'}', (string)$v, $html);
 
                                     }
 
@@ -201,7 +201,7 @@
 
                             } else {
 
-                                $html = str_replace('{'.$key.'->'.$index.'}', $val, $html);
+                                $html = str_replace('{'.$key.'->'.$index.'}', (string)$val, $html);
 
                             }
 
