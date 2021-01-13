@@ -18,15 +18,16 @@
          * @param $end
          * @param array  $props
          * @param bool  $token
+         * @param string  $api
          *
          * @return null|array
          */
-        public static function request($method, $end, $props = array(), $token = false): ?array
+        public static function request($method, $end, $props = array(), $token = false, $api = APP_API): ?array
         {
 
             //INITIALIZATION
             $curl = curl_init();
-            curl_setopt($curl, CURLOPT_URL, APP_API.$end);
+            curl_setopt($curl, CURLOPT_URL, $api.$end);
 
             //SHIPPING AND RETURN METHOD
             curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
@@ -103,8 +104,8 @@
                 $response['Router'] = $request;
             }
 
-            if (!empty($response['origin']['jwt'])) {
-                authInterface::auth($response['origin']['jwt'], false);
+            if (!empty($response['origin']['access_token'])) {
+                authInterface::auth($response['origin']['access_token'], false);
             }
 
             return $response;
@@ -156,18 +157,32 @@
 
             foreach ($rules as $rule) {
 
-                $MinMax = null;
+                $MinMax = 0;
 
                 if (
                         strpos($rule, "min:") !== false ||
                         strpos($rule, "max:") !== false
                 ) {
+
                     $stale = explode(":", $rule);
+
                     $rule = $stale[0];
-                    $MinMax = $stale[1];
+
+                    if( !empty( $stale[1] ) ){
+                        $MinMax = $stale[1];
+                    }
+
                 }
 
                 switch ($rule) {
+
+                    case 'text' :
+                        $valid = is_string($field);
+                        break;
+
+                    case 'number' :
+                        $valid = is_numeric($field);
+                        break;
 
                     case 'required' :
                         $valid = !empty($field);
@@ -186,6 +201,20 @@
                         $valid = strlen($field) <= $MinMax;
                         break;
 
+                    case 'equals' :
+
+                        $equal  = array();
+
+                        foreach(array_count_values($field) as $val => $c){
+                            if( $c > 1 ){
+                                $equal[] = $val;
+                            }
+                        }
+
+                        return !empty($equal);
+
+                        break;
+
                     default :
                         return $valid;
                         break;
@@ -195,8 +224,33 @@
 
             return $valid;
         }
+
+        /**
+         * Checks whether specific keys are contained in a
+         * array array
+         *
+         * @param $props
+         * @param array  $keys
+         *
+         * @return bool
+         */
+        public static function key_exists( $props, $keys = array() ) : bool {
+
+            if( !is_array( $keys ) || empty( $props ) ){
+                return false;
+            }
+
+            $valid = array();
+
+            foreach ($keys as $key) {
+                $valid[] = array_key_exists($key, $props);
+            }
+
+            return !(in_array(false, $valid, true));
+
+        }
+
+
     }
-
-
 
 
