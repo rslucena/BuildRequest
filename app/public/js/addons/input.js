@@ -49,6 +49,41 @@ function createFormData(elem) {
 }
 
 /**
+ * Changes the default behavior of send buttons
+ * Adding color and changing text
+ *
+ * @param elem
+ * @readonly
+ */
+function status_ajax(elem){
+
+    let submit = elem.find('[type="submit"]');
+
+    if( submit.data('text') === undefined){
+        submit.attr('data-text', submit.val());
+    }
+
+    let progress = submit.hasClass('_inProgress');
+
+    if( !progress ){
+
+        submit.val('Carregando...');
+
+        submit.addClass('_inProgress');
+
+    }else{
+
+        submit.removeAttr('data-text');
+
+        submit.val( submit.data('text') );
+
+        submit.removeClass('_inProgress');
+
+    }
+
+}
+
+/**
  * Create the default event by
  * pressing Enter to trigger a
  * submit event for the closest form
