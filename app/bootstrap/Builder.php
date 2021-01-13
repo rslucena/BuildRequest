@@ -4,14 +4,14 @@
 
     namespace app\Bootstrap;
 
-    use app\interfaces\modelInterface;
+    use app\interfaces\ModelInterface;
 
     /**
      * Class Builder
      *
      * @package app\bootstrap
      */
-    class Builder extends modelInterface
+    class Builder extends ModelInterface
     {
 
         #Router
@@ -42,7 +42,7 @@
             $page = $this->requestView("", self::$action);
 
             //CREATE CLASS
-            $className = 'app\controllers\\'.$this->keys['controler'].'Controller';
+            $className = 'app\controllers\\'.ucfirst($this->keys['controler']).'Controller';
 
             //CALL FUNCTION
             if( class_exists( $className ) ) {

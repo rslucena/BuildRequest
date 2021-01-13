@@ -63,7 +63,7 @@
                 $trace = substr($trace, 0, -1);
             }
 
-            if ($trace[0] === '/') {
+            if (isset($trace[0]) && $trace[0] === '/') {
                 $trace = substr($trace, 1);
             }
 
@@ -100,15 +100,15 @@
 
             $nameFile = ucfirst($nameFile);
 
-            if (file_exists(DIR_LOGS.'\\'.$nameFile) === false) {
+            if (file_exists(DIR_LOGS.DIRECTORY_SEPARATOR.$nameFile) === false) {
 
-                $file = fopen(DIR_LOGS.'\\'.$nameFile, 'wb');
+                $file = fopen(DIR_LOGS.DIRECTORY_SEPARATOR.$nameFile, 'wb');
                 fwrite($file, '');
                 fclose($file);
 
             }
 
-            self::$trace['path'] = DIR_LOGS.'\\'.$nameFile;
+            self::$trace['path'] = DIR_LOGS.DIRECTORY_SEPARATOR.$nameFile;
 
         }
 
@@ -127,7 +127,7 @@
 
             $nameFile = ucfirst($nameFile);
 
-            $file = fopen(DIR_LOGS.'\\'.$nameFile, 'wb');
+            $file = fopen(DIR_LOGS.DIRECTORY_SEPARATOR.$nameFile, 'wb');
             fwrite($file, '');
             fclose($file);
 
