@@ -5,6 +5,7 @@
     namespace app\Bootstrap;
 
     use app\interfaces\ModelInterface;
+    use app\providers\FileProvider;
 
     /**
      * Class Builder
@@ -58,6 +59,7 @@
 
             $this->keys['head']['canonical'] = APP_URL;
             $this->keys['head']['menu-'.self::$controler] = 'activated';
+            $this->keys['head']['files-version'] = FileProvider::recoverFileVersion(DIR_PUBLIC."/css/base/main.min.css");
 
             if( empty($page) ){
                 $this->redirect("/error404");

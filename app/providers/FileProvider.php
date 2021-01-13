@@ -78,7 +78,7 @@
 
                             $modify = self::recoverFileVersion($url);
 
-                            $render .= htmlProvider::$type("/{$type}/{$key}/{$value}.min.{$type}?v={$modify}");
+                            $render .= HtmlProvider::$type("/{$type}/{$key}/{$value}.min.{$type}?v={$modify}");
 
                         }
 
@@ -100,7 +100,7 @@
          *
          * @return string
          */
-        private static function recoverFileVersion($path): string
+        public static function recoverFileVersion($path): string
         {
 
             if (file_exists($path) === false) {
