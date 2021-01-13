@@ -4,6 +4,10 @@
   @extend .block;
 }
 
+.pointer{
+  cursor: pointer;
+}
+
 .background {
   background-size: cover;
   background-position: center;
@@ -15,6 +19,10 @@
 
 .border{
   border: 1px solid currentColor;
+}
+
+.border-0{
+  border: 0 transparent;
 }
 
 .shadow{

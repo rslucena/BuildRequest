@@ -14,9 +14,69 @@
   opacity: 1;
 }
 
-
 input, textarea, select {
+
   &:focus {
     outline: none;
   }
+
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+
+}
+
+._inProgress{
+  @extend .bg-secondary;
+  background: transparent;
+}
+
+.toggle {
+
+  @extend .pointer;
+  @extend .relative;
+  @extend .border-0;
+  @extend .m-t-low;
+  @extend .after;
+  @extend .before;
+
+  &:after{
+
+    top: -1px;
+    z-index: 0;
+    height: $padding + 7px;
+    width: ($padding * 3) + 3px;
+
+    @extend .relative;
+    @extend .db-inline;
+    @extend .bg-secondary;
+    @extend .borderRadius;
+  }
+
+  &:before{
+
+    top:  2px;
+    left: 2px;
+    z-index: 1;
+    width:  $padding;
+    height: $padding;
+
+    @extend .block;
+    @extend .shadow;
+    @extend .absolute;
+    @extend .bg-white;
+    @extend .borderRadius;
+  }
+
+  &:checked{
+
+    &:after {
+      @extend .bg-primary;
+    }
+
+    &:before {
+      left:  $padding * 2;
+    }
+
+  }
+
 }

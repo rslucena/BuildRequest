@@ -70,4 +70,35 @@
 
   }
 
+  select {
+    @extend input;
+  }
+
+}
+
+.form-toggle {
+
+  @extend .p-r;
+  @extend .m-b;
+  @extend .w-12;
+  @extend .vertical;
+  @extend .borderRadius;
+
+  color: currentColor;
+  padding: 0.1rem 0.7rem;
+  border: 1px solid currentColor;
+
+  * {
+    @extend .pointer;
+    box-sizing: border-box;
+  }
+
+  label {
+    @extend .w-10;
+  }
+
+  [type="checkbox"] {
+    @extend .toggle;
+  }
+
 }
