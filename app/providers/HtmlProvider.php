@@ -362,7 +362,55 @@
 
         }
 
+
+        /**
+         * Function to create option select
+         *
+         * @param array $content
+         * @param string $placeholder
+         *
+         * @return string
+         */
+        public static function option( $content = array(), $placeholder = "" ){
+
+            if( empty($content)){
+                return '';
+            }
+
+            $code = "";
+            $options = "";
+            $no_selected = true;
+
+            foreach ($content as $item) {
+
+                $props['value'] = $item['name'];
+                unset($props['selected']);
+
+                if( !empty($item['selected']) && $item['selected'] === true){
+                    $no_selected = false;
+                    $props['selected'] = "selected";
+                }
+
+                $options .= self::tag('option', $item['text'], $props);
+
+            }
+
+            $props = array();
+            if( $no_selected ) {
+                $props = array(
+                        'disabled' => 'disabled',
+                        'selected' => 'selected'
+                );
+            }
+            $code = self::tag('option', "Choose from options", $props);
+
+            $code .= $options;
+
+            return $code;
+
+        }
     }
+
 
 
 
