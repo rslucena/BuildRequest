@@ -6,6 +6,7 @@
 
     use app\interfaces\authInterface;
     use app\interfaces\logInterface;
+    use CURLFile;
 
     class RequestProvider
     {
@@ -29,18 +30,38 @@
             $curl = curl_init();
             curl_setopt($curl, CURLOPT_URL, $api.$end);
 
-            //SHIPPING AND RETURN METHOD
-            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($props, JSON_THROW_ON_ERROR));
-
             //HEADER
             curl_setopt($curl, CURLOPT_HTTPHEADER, self::getHeader($token));
+
+            //FILE EXIST
+            if( !empty($props) && array_column($props, 'tmp_name')){
+
+                $method = "POST";
+                curl_setopt($curl, CURLOPT_POST, true);
+
+                foreach ($_FILES as $key => $file) {
+                    $array_file = $key;
+                    $props[$array_file] = new CURLFILE(realpath($file['tmp_name']) ,$file['type'], $file['name']);
+                }
+
+                curl_setopt($curl, CURLOPT_POSTFIELDS, $props);
+
+            }else{
+
+                curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($props, JSON_THROW_ON_ERROR));
+
+            }
+
+            //CONFIGS
+            curl_setopt($curl, CURLOPT_MAXREDIRS, 10);
+            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 
             $response = curl_exec($curl);
 
             if (curl_error($curl)) {
-                $response = "{}";
+                $response = "{ 'status' : 'error' }";
                 logInterface::save(curl_error($curl));
             }
 
@@ -64,6 +85,10 @@
             $authorization = array();
 
             $head = array('Content-Type: application/json');
+
+            if(!empty($_FILES)){
+                $head = array('Content-Type:multipart/form-data');
+            }
 
             if ($token === false) {
                 return $head;
@@ -114,15 +139,28 @@
 
 
         /**
-         * Retrieves all values ​​
-         * sent via POST and GET
-         *
-         * @return null|array
-         */
+     * Retrieves all values ​​
+     * sent via POST and GET
+     *
+     * @return null|array
+     */
         public static function buildInput(): ?array
         {
 
             return $_REQUEST;
+
+        }
+
+        /**
+         * Retrieves all files ​​
+         * sent via FILES
+         *
+         * @return null|array
+         */
+        public static function buildFiles(): ?array
+        {
+
+            return $_FILES;
 
         }
 
@@ -212,6 +250,25 @@
                         }
 
                         return !empty($equal);
+
+                        break;
+
+                    case 'file' :
+
+                        if(!is_array($field)){
+                            return false;
+                        }
+
+                        $input = array_keys($field)[0];
+
+                        $field = $field[$input];
+
+                        $name = "";
+                        if(!empty($field['tmp_name'])){
+                            $name = $field['tmp_name'];
+                        }
+
+                        return is_file($name);
 
                         break;
 
