@@ -1,8 +1,6 @@
 .btn {
   border: 0;
-  @extend .bold;
   cursor: pointer;
-  letter-spacing: 1px;
   font-family: $f-titles;
 }
 
@@ -10,13 +8,17 @@
   background-color: transparent;
 }
 
-.btn-circle {
-  padding: 5px 15px;
+.btn-circle{
   border-radius: 35px;
+  @extend .btn-padding;
 }
 
 .btn-padding{
-  padding: 10px 30px;
+  padding: 5px 35px;
+}
+
+.btn-padding-2{
+  padding: 10px 15px;
 }
 
 .btn-linear {

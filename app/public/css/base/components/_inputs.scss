@@ -39,44 +39,57 @@ input, textarea, select {
   @extend .after;
   @extend .before;
 
+}
+
+.toggle-div{
+  margin-top: 0;
+  @extend .toggle;
+  @extend .relative;
+
+  .button{
+    @extend  h5;
+    @extend  .p-all;
+    @extend  .block;
+    @extend  .button;
+    @extend  .pointer;
+    @extend  .borderRadius;
+  }
+
+  .content{
+    height: 0;
+    opacity: 0;
+    @extend .w-12;
+  }
+
   &:after{
-
-    top: -1px;
-    z-index: 0;
-    height: $padding + 7px;
-    width: ($padding * 3) + 3px;
-
-    @extend .relative;
-    @extend .db-inline;
-    @extend .bg-secondary;
-    @extend .borderRadius;
-  }
-
-  &:before{
-
-    top:  2px;
-    left: 2px;
-    z-index: 1;
-    width:  $padding;
-    height: $padding;
-
-    @extend .block;
-    @extend .shadow;
+    width: 0;
+    height: 0;
+    top: $padding;
+    right: $padding;
     @extend .absolute;
-    @extend .bg-white;
-    @extend .borderRadius;
+    border-top: 10px solid $white;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
   }
 
-  &:checked{
+  input[type="checkbox"]:checked{
+    margin-top: 0;
 
-    &:after {
-      @extend .bg-primary;
+    ~ .content {
+      opacity: 1;
+      height: 100%;
+      @extend  .p-l;
+      @extend  .p-r;
+      @extend  .p-b;
+      @extend  .transition;
     }
 
-    &:before {
-      left:  $padding * 2;
+    ~ :after {
+      border-top-color: $primary;
+      transform: rotate(270deg);
     }
 
   }
 
 }
+

@@ -18,7 +18,7 @@
   display: block;
   overflow: hidden;
   margin: 0;
-  padding: 0;
+  padding: 0 10px;
 
   &:focus {
     outline: none;
@@ -85,8 +85,9 @@
 }
 
 .slick-initialized .slick-slide {
-  opacity: 0.5;
+  opacity: 0.1;
   display: block;
+  transition: opacity 0.3s, visibility 0.3s;
 }
 
 .slick-loading .slick-slide {

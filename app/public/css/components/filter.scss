@@ -1,0 +1,68 @@
+@import "../base/variables";
+
+.filter{
+
+  * {
+    color: $white;
+  }
+
+  hr{
+    opacity: 5%;
+  }
+
+
+  .checkbox{
+    display: block;
+    cursor: pointer;
+    position: relative;
+    padding-left: 30px;
+
+    input{
+      z-index: -1;
+      opacity: 0;
+      vertical-align:top;
+      position: absolute;
+    }
+
+    .control_indicator{
+      left: 0;
+      top: -5px;
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      border-radius: 50%;
+      background: $primary;
+      border: 1px solid $white;
+
+      &:after {
+        top: 3px;
+        left: 7px;
+        width: 3px;
+        height: 8px;
+        position: absolute;
+        border: solid $white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+
+    }
+
+    input:checked ~ .control_indicator{
+      background: #2aa1c0;
+    }
+
+    &:hover input:not([disabled]):checked ~ .control_indicator,
+    input:checked:focus ~ .control_indicator {
+      background: #0E647D;
+    }
+
+    input:disabled ~ .control_indicator {
+      opacity: 0.6;
+      background: $info;
+      pointer-events: none;
+    }
+
+
+  }
+
+}

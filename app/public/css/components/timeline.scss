@@ -1,0 +1,36 @@
+@import "../base/variables";
+
+.timeline{
+
+  .item{
+
+    &:after,
+    &:before{
+      top: 6px;
+      position: absolute;
+      left: $padding * -1;
+      background: $primary;
+    }
+
+    &:after{
+      width: $padding;
+      height: $padding;
+      border-radius: 100%;
+    }
+
+    &:before{
+      top: 10px;
+      width: 3px;
+      left: -10px;
+      height: 100%;
+    }
+
+    &:last-child{
+      &:before{
+        display: none;
+      }
+    }
+
+  }
+
+}

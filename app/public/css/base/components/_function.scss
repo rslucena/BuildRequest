@@ -24,7 +24,7 @@
 
 @for $i from 1 through $column {
   .z-#{$i} {
-    z-index: maxpx($i) + 0.1px
+    z-index: round(maxpx($i))
   }
 ;
 }

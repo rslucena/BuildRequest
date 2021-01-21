@@ -26,7 +26,8 @@
 }
 
 .shadow{
-  box-shadow: -5px 5px 8px 0 #1d53700d;
+  border: 1px solid darken($clear, 0.5);
+  box-shadow: 0 0 21px 0 transparentize($dark, 0.9);
 }
 
 .linear {

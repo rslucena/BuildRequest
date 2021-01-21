@@ -14,7 +14,7 @@
     padding: 0;
     border: 0;
     font: inherit;
-    font-size: 100%;
+    font-size: $h6;
     box-sizing: border-box;
     vertical-align: baseline;
     font-family: $f-texts;
@@ -32,7 +32,8 @@
   body {
     line-height: 1;
     overflow-x: hidden;
-    background-color: $info;
+    letter-spacing: -0.2px;
+    background-color: $clear;
     background-size: 100% auto;
     background-repeat: repeat-y;
     background-position: top center;

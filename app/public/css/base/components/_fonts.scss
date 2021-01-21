@@ -4,7 +4,7 @@ a,
 input,
 label {
   font-size: $h5;
-  color: $linear1;
+  color: $text;
   font-family: $f-texts;
 }
 
@@ -21,16 +21,18 @@ a {
 }
 
 p {
-  font-size: $h5;
+  font-size: $h6;
   letter-spacing: 1px;
   line-height: $line;
 }
 
 strong, b {
-  font-weight: bold !important;
+  @extend .bold;
+  letter-spacing: 0.5px;
 }
 
 h1, h2, h3, h4, h5, h6 {
+  line-height: 1;
   font-family: $f-titles;
 }
 
@@ -46,12 +48,16 @@ h3 {
   font-size: $h3;
 }
 
-h4, h5, h6 {
+h4{
   font-size: $h4;
 }
 
-.mini-size {
-  font-size: $h5 - 4px;
+h5 {
+  font-size: $h5;
+}
+
+h6, .mini-size {
+  font-size: $h6 - 2px;
 }
 
 .normal{
@@ -59,7 +65,7 @@ h4, h5, h6 {
 }
 
 .bold{
-  font-weight: 600;
+  font-weight: 600 !important;
 }
 
 .uppercase {

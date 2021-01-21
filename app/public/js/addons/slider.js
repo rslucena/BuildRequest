@@ -581,7 +581,6 @@ let element = $('.slider');
         adaptiveHeight: true,
         prevArrow: '<div class="prev-arrow"></div>',
         nextArrow: '<div class="next-arrow"></div>'
-
     });
 
 })(jQuery);
