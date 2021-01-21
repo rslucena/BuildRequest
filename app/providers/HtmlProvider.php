@@ -327,7 +327,7 @@
             #PREV
 
             if ($active !== 1) {
-                $link = self::a("$currentPage?p=".($active - 1), "<", array('class' => "block btn btn-padding bt-border borderRadius c-secondary") );
+                $link = self::a("$currentPage?p=".($active - 1), "<", array('class' => "block btn btn-padding btn-padding-2 borderRadius bt-border c-secondary") );
                 $return .= self::li( $link , array('class' => 'm-r'));
             }
 
@@ -337,12 +337,12 @@
                     $class = ($active === $x) ? 'bg-primary' : '';
                     if (!empty($class)) {
 
-                        $link = self::a("$currentPage?p=$x", (string)$x, array('class' => "block btn btn-padding borderRadius normal bt-border bg-primary c-white") );
+                        $link = self::a("$currentPage?p=$x", (string)$x, array('class' => "block btn btn-padding btn-padding-2 borderRadius normal bt-border bg-primary c-white") );
                         $return .= self::li( $link , array('class' => 'm-r'));
 
                     } else {
 
-                        $link = self::a("$currentPage?p=$x", (string)$x, array('class' => "block btn btn-padding borderRadius bt-border c-secondary") );
+                        $link = self::a("$currentPage?p=$x", (string)$x, array('class' => "block btn btn-padding btn-padding-2 borderRadius bt-border c-secondary") );
                         $return .= self::li( $link , array('class' => 'm-r'));
 
                     }
@@ -352,7 +352,7 @@
 
             #NEXT
             if (($active + 1) <= $pages) {
-                $link = self::a("$currentPage?p=".($active + 1), ">", array('class' => "block btn btn-padding borderRadius bt-border c-secondary") );
+                $link = self::a("$currentPage?p=".($active + 1), ">", array('class' => "block btn btn-padding btn-padding-2 borderRadius bt-border c-secondary") );
                 $return .= self::li( $link , array('class' => 'm-r'));
             }
 
