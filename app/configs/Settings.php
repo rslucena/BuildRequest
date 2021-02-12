@@ -18,4 +18,6 @@
 
     ini_set('display_startup_errors', (string)CONF_SAVELOGS);
 
+    session_set_cookie_params((int)CONF_TIMESESSION);
+
     ini_set('session.gc_maxlifetime', CONF_TIMESESSION);
