@@ -30,14 +30,17 @@
             }
 
             unset($invert);
+
             foreach ($user['data'] as $key => $value) {
-                self::updateSession($key, $value);
+                self::updateSession('user', $key, $value);
             }
 
-            self::updateSession('token', $token);
+            self::updateSession('config', 'token', $token);
 
             if ($regenerate_id) {
+
                 session_regenerate_id(true);
+
             }
 
             if (empty(self::getSession())) {
@@ -49,47 +52,48 @@
         }
 
         /**
-         * Saves or updates a value for a user session
+         * Retrieves a value or all in
+         * the open session
          *
-         * @param $key
-         * @param $val
+         * @param string $parent
+         * @param string $key
          *
-         * @return null|string
+         * @return mixed
          */
-        public static function updateSession($key, $val): ?string
+        public static function getSession($parent = '__allsession', $key = "")
         {
 
-            $_SESSION[$key] = $val;
-
-            if (!empty($_SESSION[$key])) {
-                return (string)$_SESSION[$key];
+            if( !empty( $key ) ){
+                return $_SESSION[$parent][$key] ?? null;
             }
 
-            return null;
+            if( $parent === '__allsession' ){
+                return $_SESSION;
+            }
+
+            return $_SESSION[$parent] ?? null;
 
         }
 
         /**
-         * Retrieves a value or all in
-         * the open session
+         * Saves or updates a value for a user session
          *
-         * @param string  $filter
+         * @param $key
+         * @param $val
+         * @param $parent
          *
-         * @return null|array
+         * @return null|string
          */
-        public static function getSession($filter = ""): ?array
+        public static function updateSession($parent, $key, $val): ?string
         {
 
-            if (!empty($filter) && is_string($filter)) {
+            $_SESSION[$parent][$key] = $val;
 
-                if (empty($_SESSION[$filter])) {
-                    return array();
-                }
-
-                return array($_SESSION[$filter]);
+            if (!empty($_SESSION[$parent][$key])) {
+                return (string)$_SESSION[$parent][$key];
             }
 
-            return $_SESSION;
+            return null;
 
         }
 
@@ -106,9 +110,11 @@
                 return false;
             }
 
-            $ass = self::getSession('signature');
+            $user = self::getSession('user');
 
-            return $ass[0] !== 0;
+            $ass = $user['assinatura'] ?? 0;
+
+            return isset($ass) && $ass[0] !== 0;
 
         }
 
@@ -121,11 +127,11 @@
         public static function is_login(): bool
         {
 
-            if (empty(self::getSession())) {
+            if (empty(self::getSession('user'))) {
                 return false;
             }
 
-            if (empty(self::getSession('name'))) {
+            if ( empty( self::getSession( 'config', 'token' ) ) ) {
                 return false;
             }
 
@@ -135,12 +141,41 @@
 
         /**
          * Remove Session and force login
-         *
+
+         * @return void
          */
         public static function logout(): void
         {
+
+            session_unset();
             session_destroy();
             unset($_SESSION);
+
+            session_start();
+
+            self::updateSession('config', 'maxlife', time() + (int)CONF_TIMESESSION );
+
+        }
+
+        /**
+         * Checks the validity of the assignment and if it expires
+         * removes and recreates a new
+         */
+        public static function build() : void
+        {
+
+            session_start();
+
+            $maxlife = self::getSession('config', 'maxlife');
+
+            if ( empty( $maxlife ) ) {
+                self::logout();
+            }
+
+            if ( $maxlife < time() ) {
+                self::logout();
+            }
+
         }
 
     }
