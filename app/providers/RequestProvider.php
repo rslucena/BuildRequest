@@ -95,11 +95,11 @@
             }
 
             if (authInterface::is_login()) {
-                $authorization = authInterface::getSession('token');
+                $authorization = authInterface::getSession('config' , 'token');
             }
 
-            if (!empty($authorization[0])) {
-                $head[] = 'Authorization: Bearer '.$authorization[0];
+            if (!empty($authorization)) {
+                $head[] = 'Authorization: Bearer '.$authorization;
             }
 
             return $head;
