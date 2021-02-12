@@ -87,9 +87,15 @@
             $url_parameter[2] = str_replace(array('-', "@"), '_', $this->getParameter(2));
             self::$action = ($url_parameter[2] === '') ? 'index' : $url_parameter[2];
 
-            if( strpos(self::$controler, "error") !== false){
+            $main_controller = array( 'login', 'recover', 'error404');
+
+            if( in_array(self::$controler, $main_controller, true) !== false){
+
+                if( self::$action === "index" ){
+                    self::$action = self::$controler;
+                }
+
                 self::$controler = 'home';
-                self::$action = 'error404';
             }
 
         }
