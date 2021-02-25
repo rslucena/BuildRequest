@@ -112,9 +112,9 @@
 
             $user = self::getSession('user');
 
-            $ass = $user['assinatura'] ?? 0;
+            $ass = $user['signature'] ?? 0;
 
-            return isset($ass) && $ass[0] !== 0;
+            return isset($ass) && $ass !== 0;
 
         }
 
