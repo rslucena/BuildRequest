@@ -57,11 +57,16 @@
 
             }
 
+            if(empty( $this->keys['head']['title'] )){
+                $this->keys['head']['title'] = APP_NAME;
+            }
+
             $this->keys['head']['canonical'] = APP_URL;
-            $this->keys['head']['menu-'.self::$controler] = 'activated';
+            $this->keys['head']['description'] = APP_DESCRIPTION;
+            $this->keys['head']['menu-'.self::$controler.'-'.self::$action] = 'activated';
             $this->keys['head']['files-version'] = FileProvider::recoverFileVersion(DIR_PUBLIC."/css/base/main.min.css");
 
-            if( empty($page) ){
+            if (empty($page)) {
                 $this->redirect("/error404");
             }
 
