@@ -185,7 +185,7 @@
         }
 
         /**
-         * date time function, create a date time tag
+         * date time function, create a time tag
          *
          * @param string  $value
          * @param string  $entry
@@ -199,9 +199,16 @@
 
             try {
 
-                $date = DateTime::createFromFormat($entry, $value)->format($leave);
+                $date = "";
+                $props = array();
 
-                $props = array('datetime' => $date);
+                if( !empty( $value ) ){
+
+                    $date = DateTime::createFromFormat($entry, $value)->format($leave);
+
+                    $props = array('datetime' => $date);
+
+                }
 
                 return self::tag('time', $date, $props);
 
@@ -257,6 +264,10 @@
                 $props['name'] = $value;
             }
 
+            if( empty($props['value'])){
+                $props['value'] = $value;
+            }
+
             if( empty($props['type'])){
                 $props['type'] = 'text';
             }
@@ -269,22 +280,58 @@
          *
          * @param string  $name
          * @param string  $text
+         * @param string  $value
+         * @param bool  $checkbox
          *
          * @return string
          */
-        public static function checkbox(string $name, string $text ): string
+        public static function checkbox(string $name, string $text, string $value = "", bool $checkbox = false): string
         {
 
             $input = '';
 
             $input .= self::label($text, array('for' => $name, 'class' => 'input-label'));
-            $input .= self::input($name, array('id' => $name, 'type' => 'checkbox', 'class' => 'input'));
 
-            $input .= self::div(" ", array('class' => "after control_indicator"));
+            $props = array('id' => $name, 'value' => $value, 'type' => 'checkbox', 'class' => 'input');
+
+            if( $checkbox ){
+                $props['checked'] = "checked";
+            }
+
+            $input .= self::input($name, $props);
+
+            $input .= self::div(" ", array('class' => "after control"));
 
             $input = self::div($input, array('class' => "decoration checkbox relative"));
 
             return $input;
+
+        }
+
+        /**
+         * Function to create form input
+         *
+         * @param string  $id
+         * @param string  $inputs
+         * @param string  $url
+         * @param string  $enctype
+         * @param string  $method
+         *
+         * @return string
+         */
+        public static function form(string $id, string $inputs, string $url = "", string $enctype = "application/x-www-form-urlencoded", string $method = "POST"){
+
+            $props = array();
+
+            $props['id'] = !empty( $id ) ? $id : substr( sha1((string)mt_rand()) ,10,10);
+
+            $props['action'] = !empty($url) ? $url : $_SERVER['REQUEST_URI'];
+
+            $props['enctype'] = $enctype;
+
+            $props['method'] = $method;
+
+            return self::tag('form', $inputs, $props);
 
         }
 
@@ -361,7 +408,6 @@
             return $return;
 
         }
-
 
         /**
          * Function to create option select
